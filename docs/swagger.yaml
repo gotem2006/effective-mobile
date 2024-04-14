@@ -1,0 +1,146 @@
+basePath: /
+definitions:
+  models.Car:
+    properties:
+      mark:
+        type: string
+      model:
+        type: string
+      owner:
+        $ref: '#/definitions/models.Person'
+      regNum:
+        type: string
+      year:
+        type: integer
+    type: object
+  models.Person:
+    properties:
+      name:
+        type: string
+      patronymic:
+        type: string
+      surname:
+        type: string
+    type: object
+  models.RegNums:
+    properties:
+      regNums:
+        items:
+          type: string
+        type: array
+    type: object
+host: 0.0.0.0:8080
+info:
+  contact: {}
+  description: Swagger for car catalog api
+  title: Car API
+  version: "1.0"
+paths:
+  /car:
+    delete:
+      consumes:
+      - application/json
+      description: Delete car by regNum
+      parameters:
+      - description: RegNum
+        in: query
+        name: regNum
+        required: true
+        type: string
+      responses: {}
+      summary: DeleteCar
+      tags:
+      - CarAPI
+    get:
+      description: Get slice of car
+      parameters:
+      - description: limit
+        in: query
+        name: limit
+        type: integer
+      - description: offset
+        in: query
+        name: offset
+        type: integer
+      - collectionFormat: csv
+        description: mark
+        in: query
+        items:
+          type: string
+        name: mark
+        type: array
+      - collectionFormat: csv
+        description: model
+        in: query
+        items:
+          type: string
+        name: model
+        type: array
+      - collectionFormat: csv
+        description: year
+        in: query
+        items:
+          type: string
+        name: year
+        type: array
+      - collectionFormat: csv
+        description: owner_name
+        in: query
+        items:
+          type: string
+        name: owner_name
+        type: array
+      - collectionFormat: csv
+        description: owner_surname
+        in: query
+        items:
+          type: string
+        name: owner_surname
+        type: array
+      - collectionFormat: csv
+        description: owner_patronymic
+        in: query
+        items:
+          type: string
+        name: owner_patronymic
+        type: array
+      responses: {}
+      summary: GetCars
+      tags:
+      - CarAPI
+    post:
+      consumes:
+      - application/json
+      description: Post car by regNum
+      parameters:
+      - description: RegNums
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.RegNums'
+      responses: {}
+      summary: PostCar
+      tags:
+      - CarAPI
+    put:
+      consumes:
+      - application/json
+      description: update car
+      parameters:
+      - description: regNum
+        in: query
+        name: regNum
+        required: true
+        type: string
+      - description: Car
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Car'
+      responses: {}
+      summary: UpdateCar
+      tags:
+      - CarAPI
+swagger: "2.0"
